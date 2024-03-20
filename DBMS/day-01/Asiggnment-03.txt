@@ -1,0 +1,279 @@
+udo mysql -u root -p
+[sudo] password for dac: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databass;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databass' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+12 rows in set (0.01 sec)
+
+mysql>  create database college;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> create table student 
+    -> ( rollno int ,
+    -> name varchar(20),
+    -> marks float,
+    -> age int,
+    -> class int);
+ERROR 1046 (3D000): No database selected
+mysql> select database();
++------------+
+| database() |
++------------+
+| NULL       |
++------------+
+1 row in set (0.00 sec)
+
+mysql> use college;
+Database changed
+mysql> select database();
++------------+
+| database() |
++------------+
+| college    |
++------------+
+1 row in set (0.00 sec)
+
+mysql> create table student
+    -> (rollno int,
+    -> name varchar(20),
+    -> marks float , 
+    -> age int,
+    -> class int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | float       | YES  |     | NULL    |       |
+| age    | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,class) values (102, 'ram',85,85,9);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student (rollno,name,marks,age,class) values (102, 'ram',85,85,9);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (102, 'ram',85,85,9);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (103, 'sita',89,100,10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (104, 'riya',85,102,11);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (109, 'priya',83,106,12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (109, 'priya',56,200,19);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (185, 'sarika',53,256,55);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | float       | YES  |     | NULL    |       |
+| age    | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from college
+    -> \c
+mysql> select * from college;
+ERROR 1146 (42S02): Table 'college.college' doesn't exist
+mysql> select * from student;
++--------+--------+-------+------+-------+
+| rollno | name   | marks | age  | class |
++--------+--------+-------+------+-------+
+|    102 | ram    |    85 |   85 |     9 |
+|    102 | ram    |    85 |   85 |     9 |
+|    103 | sita   |    89 |  100 |    10 |
+|    104 | riya   |    85 |  102 |    11 |
+|    109 | priya  |    83 |  106 |    12 |
+|    109 | priya  |    56 |  200 |    19 |
+|    185 | sarika |    53 |  256 |    55 |
++--------+--------+-------+------+-------+
+7 rows in set (0.00 sec)
+
+mysql> delete from student where rollno=104;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from student where rollno=102;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select * from student;
++--------+--------+-------+------+-------+
+| rollno | name   | marks | age  | class |
++--------+--------+-------+------+-------+
+|    103 | sita   |    89 |  100 |    10 |
+|    109 | priya  |    83 |  106 |    12 |
+|    109 | priya  |    56 |  200 |    19 |
+|    185 | sarika |    53 |  256 |    55 |
++--------+--------+-------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set name='priya',marks=100 where age=200;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++--------+--------+-------+------+-------+
+| rollno | name   | marks | age  | class |
++--------+--------+-------+------+-------+
+|    103 | sita   |    89 |  100 |    10 |
+|    109 | priya  |    83 |  106 |    12 |
+|    109 | priya  |   100 |  200 |    19 |
+|    185 | sarika |    53 |  256 |    55 |
++--------+--------+-------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set marks=marks+50;
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> update student set marks=marks+0.5;
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from student;
++--------+--------+-------+------+-------+
+| rollno | name   | marks | age  | class |
++--------+--------+-------+------+-------+
+|    103 | sita   | 139.5 |  100 |    10 |
+|    109 | priya  | 133.5 |  106 |    12 |
+|    109 | priya  | 150.5 |  200 |    19 |
+|    185 | sarika | 103.5 |  256 |    55 |
++--------+--------+-------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set marks=marks-50;
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from student;
++--------+--------+-------+------+-------+
+| rollno | name   | marks | age  | class |
++--------+--------+-------+------+-------+
+|    103 | sita   |  89.5 |  100 |    10 |
+|    109 | priya  |  83.5 |  106 |    12 |
+|    109 | priya  | 100.5 |  200 |    19 |
+|    185 | sarika |  53.5 |  256 |    55 |
++--------+--------+-------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (101, 'priya',56,200,19);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (102, 'riya',55,212,13);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (103, 'diya',54,216,14);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (104, 'miya',59,218,15);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student (rollno,name,marks,age,class) values (105, 'jiya',60,219,18);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++--------+-------+-------+------+-------+
+| rollno | name  | marks | age  | class |
++--------+-------+-------+------+-------+
+|    101 | priya |    56 |  200 |    19 |
+|    102 | riya  |    55 |  212 |    13 |
+|    103 | diya  |    54 |  216 |    14 |
+|    104 | miya  |    59 |  218 |    15 |
+|    105 | jiya  |    60 |  219 |    18 |
++--------+-------+-------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> 
+
+

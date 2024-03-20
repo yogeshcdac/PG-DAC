@@ -1,0 +1,414 @@
+ sudo mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> apt list --upgradable | grep mssql
+    -> apt list --upgradable | grep mysql
+    -> create database college;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'apt list --upgradable | grep mssql
+apt list --upgradable | grep mysql
+create dat' at line 1
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> CREATE DATABASE college;
+ERROR 1007 (HY000): Can't create database 'college'; database exists
+mysql> SHOW DATABASE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DATABASE' at line 1
+mysql> CREATE TABLE STUDENT;
+ERROR 1046 (3D000): No database selected
+mysql> SELECT DATABASE ();
++-------------+
+| DATABASE () |
++-------------+
+| NULL        |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> use college;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select database();
++------------+
+| database() |
++------------+
+| college    |
++------------+
+1 row in set (0.00 sec)
+
+mysql> create table student(rollno int, name varchar(20), marks float, age int, class int);
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| student           |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| roll  | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| class | varchar(20) | YES  |     | NULL    |       |
+| grade | int         | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> drop table student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc student;
+ERROR 1146 (42S02): Table 'college.student' doesn't exist
+mysql> create table student(rollno int, name varchar(20), marks float, age int, class int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | float       | YES  |     | NULL    |       |
+| age    | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student add column; age int;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'age int' at line 1
+mysql> alter table student add column  age int;
+ERROR 1060 (42S21): Duplicate column name 'age'
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | float       | YES  |     | NULL    |       |
+| age    | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student drop column age;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | float       | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table student modify column marks int,null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'null' at line 1
+mysql> alter table student modify column marks int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> show database college;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database college' at line 1
+mysql> SHOW DATABASE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DATABASE' at line 1
+mysql> SHOW DATABASE
+    -> desc student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DATABASE
+desc student' at line 1
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select database();
++------------+
+| database() |
++------------+
+| college    |
++------------+
+1 row in set (0.00 sec)
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show database();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database()' at line 1
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> TRUNCATE TABLE student;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,class) values (101 ,'shreya',78,7);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student (rollno,name,marks,class) values (102, 'ram',85,9);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| marks  | int         | YES  |     | NULL    |       |
+| class  | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student;
++--------+--------+-------+-------+
+| rollno | name   | marks | class |
++--------+--------+-------+-------+
+|    101 | shreya |    78 |     7 |
+|    102 | ram    |    85 |     9 |
++--------+--------+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> drop table if exists student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc student;
+ERROR 1146 (42S02): Table 'college.student' doesn't exist
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student;
+ERROR 1146 (42S02): Table 'college.student' doesn't exist
+mysql> drop database college;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+12 rows in set (0.00 sec)
+
+mysql> 
+
