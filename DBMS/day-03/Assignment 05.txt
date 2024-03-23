@@ -1,0 +1,518 @@
+*********************************************Q2****************************************************************************************************************
+
+
+dac@dac-Veriton-M200-H310:~$ cd PG-DAC/DBMS
+dac@dac-Veriton-M200-H310:~/PG-DAC/DBMS$ cd day-03
+dac@dac-Veriton-M200-H310:~/PG-DAC/DBMS/day-03$ sudo mysql -u root -p
+[sudo] password for dac: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> select database ();
++-------------+
+| database () |
++-------------+
+| NULL        |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> use college;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create table student1 ( id int ,name varchar(20),dept_id int ,birth int );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student1 ( id int ,name varchar(20),dept_id int ,birth int );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int ,name varchar(20),dept_id int ,birth int )' at line 1
+mysql> insert into student1 ( id int ,name varchar(20),dept_id int ,birth int ) values (1, 'Maria' , 2 , 1994-03-12);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int ,name varchar(20),dept_id int ,birth int ) values (1, 'Maria' , 2 , 1994-03-' at line 1
+mysql> insert into student1  values (1, 'Maria' , 2 , 1994-03-12);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student1  values (2, 'John' , 1, 1993-02-07);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student1  values (3, 'Gal' , 4, 1992-09-11);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student1  values (4, 'Jakey' , 2, 1990-08-31);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student1  values (5, 'Rama' , 1, 1994-12-09);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student1  values (6, 'Maria' , 4, 1993-10-09);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc student1;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| dept_id | int         | YES  |     | NULL    |       |
+| birth   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student1 ;
++------+-------+---------+-------+
+| id   | name  | dept_id | birth |
++------+-------+---------+-------+
+|    1 | Maria |       2 |  1979 |
+|    2 | John  |       1 |  1984 |
+|    3 | Gal   |       4 |  1972 |
+|    4 | Jakey |       2 |  1951 |
+|    5 | Rama  |       1 |  1973 |
+|    6 | Maria |       4 |  1974 |
++------+-------+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select * from  student1 where name like '----%a';
+Empty set (0.00 sec)
+
+mysql> select * from student1 ;
++------+-------+---------+-------+
+| id   | name  | dept_id | birth |
++------+-------+---------+-------+
+|    1 | Maria |       2 |  1979 |
+|    2 | John  |       1 |  1984 |
+|    3 | Gal   |       4 |  1972 |
+|    4 | Jakey |       2 |  1951 |
+|    5 | Rama  |       1 |  1973 |
+|    6 | Maria |       4 |  1974 |
++------+-------+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select * from  student1 where name like '----%a';
+Empty set (0.00 sec)
+
+mysql> desc student1;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| dept_id | int         | YES  |     | NULL    |       |
+| birth   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from  student1 where name like '____%a';
++------+-------+---------+-------+
+| id   | name  | dept_id | birth |
++------+-------+---------+-------+
+|    1 | Maria |       2 |  1979 |
+|    6 | Maria |       4 |  1974 |
++------+-------+---------+-------+
+2 rows in set (0.00 sec)
+ ***************************************************************************************************************** q3***************************************************
+ mysql> create table student2 ( id int ,name varchar(20),dept_id int ,birth date );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student2  values (1 , 'Maria Gloria' , 'CS' , 1994-03-12 );
+ERROR 1366 (HY000): Incorrect integer value: 'CS' for column 'dept_id' at row 1
+mysql> drop table student2;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table student1 ( id int ,name varchar(20),dept_id int ,birth int );
+ERROR 1050 (42S01): Table 'student1' already exists
+mysql> create table student1 ( id int ,name varchar(20),dept_id int ,birth int );
+ERROR 1050 (42S01): Table 'student1' already exists
+mysql> create table student1 ( id int ,name varchar(20),dept_id int ,birth int );
+ERROR 1050 (42S01): Table 'student1' already exists
+mysql> create table student1 ( id int ,name varchar(20),dept_id int ,birth int );
+ERROR 1050 (42S01): Table 'student1' already exists
+mysql> create table student1 ( id int ,name varchar(20),dept_id int ,birth int );
+ERROR 1050 (42S01): Table 'student1' already exists
+mysql> create table student2 (id int ,name varchar(20),dept varchar(10) ,birth date );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student2  values (1 , 'Maria Gloria' , 'CS' , 1994-03-12 );
+ERROR 1292 (22007): Incorrect date value: '1979' for column 'birth' at row 1
+mysql> insert into student2  values (1 , 'Maria Gloria' , 'CS' , '1994-03-12' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student2  values ( 2 ,'John Smith',  'IT' ,'1993-02-07' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student2  values (3 , 'Gal Rao', 'CS' , '1992-09-11' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student2  values (4 , 'Jakey Smith' , 'EC' , '1990-08-31' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student2  values (5 , 'Rama Saho' , 'IT' , '1994-12-09' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student2  values (6 , 'Maria Gaga' , 'EC' , '1993-10-09' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select roll , name , birth-'2024-03-22' as age from student2;
+ERROR 1054 (42S22): Unknown column 'roll' in 'field list'
+mysql> select id , name , birth-'2024-03-22' as age from student2;
++------+--------------+----------+
+| id   | name         | age      |
++------+--------------+----------+
+|    1 | Maria Gloria | 19938288 |
+|    2 | John Smith   | 19928183 |
+|    3 | Gal Rao      | 19918887 |
+|    4 | Jakey Smith  | 19898807 |
+|    5 | Rama Saho    | 19939185 |
+|    6 | Maria Gaga   | 19928985 |
++------+--------------+----------+
+6 rows in set, 6 warnings (0.00 sec)
+
+mysql> desc student2;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| dept  | varchar(10) | YES  |     | NULL    |       |
+| birth | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student2;
++------+--------------+------+------------+
+| id   | name         | dept | birth      |
++------+--------------+------+------------+
+|    1 | Maria Gloria | CS   | 1994-03-12 |
+|    2 | John Smith   | IT   | 1993-02-07 |
+|    3 | Gal Rao      | CS   | 1992-09-11 |
+|    4 | Jakey Smith  | EC   | 1990-08-31 |
+|    5 | Rama Saho    | IT   | 1994-12-09 |
+|    6 | Maria Gaga   | EC   | 1993-10-09 |
++------+--------------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select year(curdate())-year(birth) as age from dept;
+ERROR 1146 (42S02): Table 'college.dept' doesn't exist
+mysql> select id ,name , year(curdate())-year(birth) as age ;
+ERROR 1054 (42S22): Unknown column 'id' in 'field list'
+mysql> select id ,name , year(curdate())-year(birth) as age  from student2;
++------+--------------+------+
+| id   | name         | age  |
++------+--------------+------+
+|    1 | Maria Gloria |   30 |
+|    2 | John Smith   |   31 |
+|    3 | Gal Rao      |   32 |
+|    4 | Jakey Smith  |   34 |
+|    5 | Rama Saho    |   30 |
+|    6 | Maria Gaga   |   31 |
++------+--------------+------+
+6 rows in set (0.00 sec)
+
+mysql> 
+**************************************************************q4*************************************
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> select database ();
++-------------+
+| database () |
++-------------+
+| college     |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> use department ;
+ERROR 1049 (42000): Unknown database 'department'
+mysql> create database depart;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> create table employee;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> use depart ;
+Database changed
+mysql> select database();
++------------+
+| database() |
++------------+
+| depart     |
++------------+
+1 row in set (0.00 sec)
+
+mysql> create table employee (create table employee (id int , fname varchar(20), lname varchar(20), salary int , joining_date date , department varchar(10)))
+    -> \c
+mysql> create table employee (id int , fname varchar(20), lname varchar(20), salary int , joining_date date , department varchar(10))
+    -> \c
+mysql> create table employee (id int , fname varchar(20), lname varchar(20), salary int , joining_date date , department varchar(10))
+    -> create table employee (id int , fname varchar(20), lname varchar(20), salary int , joining_date date , department varchar(10))
+    -> \c
+mysql> create table employee (id int , fname varchar(20), lname varchar(20), salary int , joining_date date , department varchar(10));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into values (1 , Bob , Kinto , 1000000 , '2019-01-20' , Finance);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values (1 , Bob , Kinto , 1000000 , '2019-01-20' , Finance)' at line 1
+mysql> insert into values (1 , 'Bob' , 'Kinto' , 1000000 , '2019-01-20' , 'Finance');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values (1 , 'Bob' , 'Kinto' , 1000000 , '2019-01-20' , 'Finance')' at line 1
+mysql> insert into  employee values (1 , 'Bob' , 'Kinto' , 1000000 , '2019-01-20' , 'Finance');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  employee values ( 2 , Jerry ,Kansxo , 6000000 , '2019-01-15' , IT);
+ERROR 1054 (42S22): Unknown column 'Jerry' in 'field list'
+mysql> insert into  employee values ( 2 , 'Jerry' , 'Kansxo' , 6000000 , '2019-01-15' , 'IT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  employee values ( 3, 'Philip' , 'Jose' , 8900000 , '2019-02-05' , 'Banking');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  employee values (4 , 'John' , 'Abraham' ,2000000 , '2019-02-25' , 'Insurance');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  employee values (5 , 'Michael' , 'Mathew' , 2200000 , '2019-02-28', 'Finance');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  employee values (6 , 'Alex' ,'chreketo' , 4000000 , '2019-05-10' , 'IT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  employee values (7 ,'Yohan' ,'Soso' , 1230000 , '2019-06-20' , 'Banking');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | YES  |     | NULL    |       |
+| fname        | varchar(20) | YES  |     | NULL    |       |
+| lname        | varchar(20) | YES  |     | NULL    |       |
+| salary       | int         | YES  |     | NULL    |       |
+| joining_date | date        | YES  |     | NULL    |       |
+| department   | varchar(10) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> select * from employee;
++------+---------+----------+---------+--------------+------------+
+| id   | fname   | lname    | salary  | joining_date | department |
++------+---------+----------+---------+--------------+------------+
+|    1 | Bob     | Kinto    | 1000000 | 2019-01-20   | Finance    |
+|    2 | Jerry   | Kansxo   | 6000000 | 2019-01-15   | IT         |
+|    3 | Philip  | Jose     | 8900000 | 2019-02-05   | Banking    |
+|    4 | John    | Abraham  | 2000000 | 2019-02-25   | Insurance  |
+|    5 | Michael | Mathew   | 2200000 | 2019-02-28   | Finance    |
+|    6 | Alex    | chreketo | 4000000 | 2019-05-10   | IT         |
+|    7 | Yohan   | Soso     | 1230000 | 2019-06-20   | Banking    |
++------+---------+----------+---------+--------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> create table reward 
+    -> (ref_id int, 
+    -> reward_date date,
+    -> amount int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into reward values ( 1 , '2019-05-11' , 1000 );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into reward values ( 2 , '2019-02-15' , 5000 );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into reward values ( 3 , '2019-04-22' , 2000 );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into reward values ( 1 , '2019-06-20' , 8000 );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc reward
+    -> \c
+mysql> desc reward ;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| ref_id      | int  | YES  |     | NULL    |       |
+| reward_date | date | YES  |     | NULL    |       |
+| amount      | int  | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from reward;
++--------+-------------+--------+
+| ref_id | reward_date | amount |
++--------+-------------+--------+
+|      1 | 2019-05-11  |   1000 |
+|      2 | 2019-02-15  |   5000 |
+|      3 | 2019-04-22  |   2000 |
+|      1 | 2019-06-20  |   8000 |
++--------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select id, fname,lname from employee;
++------+---------+----------+
+| id   | fname   | lname    |
++------+---------+----------+
+|    1 | Bob     | Kinto    |
+|    2 | Jerry   | Kansxo   |
+|    3 | Philip  | Jose     |
+|    4 | John    | Abraham  |
+|    5 | Michael | Mathew   |
+|    6 | Alex    | chreketo |
+|    7 | Yohan   | Soso     |
++------+---------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select id,fname as employee_name from employee;
++------+---------------+
+| id   | employee_name |
++------+---------------+
+|    1 | Bob           |
+|    2 | Jerry         |
+|    3 | Philip        |
+|    4 | John          |
+|    5 | Michael       |
+|    6 | Alex          |
+|    7 | Yohan         |
++------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> select fname',,' from employee;
++---------+
+| ,,      |
++---------+
+| Bob     |
+| Jerry   |
+| Philip  |
+| John    |
+| Michael |
+| Alex    |
+| Yohan   |
++---------+
+7 rows in set (0.00 sec)
+
+mysql> select ,, 'fname' from employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',, 'fname' from employee' at line 1
+mysql> select fname from employee;
++---------+
+| fname   |
++---------+
+| Bob     |
+| Jerry   |
+| Philip  |
+| John    |
+| Michael |
+| Alex    |
+| Yohan   |
++---------+
+7 rows in set (0.00 sec)
+
+mysql> alter table employee modify column department varchar(10),unique;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique' at line 1
+mysql> alter table employee modify column department varchar(10)unique;
+ERROR 1062 (23000): Duplicate entry 'Banking' for key 'employee.department'
+mysql> select * from employee where fname like ',,';
+Empty set (0.00 sec)
+
+mysql> select * from employee
+    -> \c
+mysql> desc employee;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | YES  |     | NULL    |       |
+| fname        | varchar(20) | YES  |     | NULL    |       |
+| lname        | varchar(20) | YES  |     | NULL    |       |
+| salary       | int         | YES  |     | NULL    |       |
+| joining_date | date        | YES  |     | NULL    |       |
+| department   | varchar(10) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select fname from employee;
++---------+
+| fname   |
++---------+
+| Bob     |
+| Jerry   |
+| Philip  |
+| John    |
+| Michael |
+| Alex    |
+| Yohan   |
++---------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee where fname like '____';
++------+-------+----------+---------+--------------+------------+
+| id   | fname | lname    | salary  | joining_date | department |
++------+-------+----------+---------+--------------+------------+
+|    4 | John  | Abraham  | 2000000 | 2019-02-25   | Insurance  |
+|    6 | Alex  | chreketo | 4000000 | 2019-05-10   | IT         |
++------+-------+----------+---------+--------------+------------+
+2 rows in set (0.01 sec)
+
+mysql> 
+
+
+ 

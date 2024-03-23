@@ -1,0 +1,594 @@
+dac@dac-Veriton-M200-H310:~$ sudo mysql -u root -p
+[sudo] password for dac: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> \c
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> use information_schema;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++---------------------------------------+
+| Tables_in_information_schema          |
++---------------------------------------+
+| ADMINISTRABLE_ROLE_AUTHORIZATIONS     |
+| APPLICABLE_ROLES                      |
+| CHARACTER_SETS                        |
+| CHECK_CONSTRAINTS                     |
+| COLLATIONS                            |
+| COLLATION_CHARACTER_SET_APPLICABILITY |
+| COLUMNS                               |
+| COLUMNS_EXTENSIONS                    |
+| COLUMN_PRIVILEGES                     |
+| COLUMN_STATISTICS                     |
+| ENABLED_ROLES                         |
+| ENGINES                               |
+| EVENTS                                |
+| FILES                                 |
+| INNODB_BUFFER_PAGE                    |
+| INNODB_BUFFER_PAGE_LRU                |
+| INNODB_BUFFER_POOL_STATS              |
+| INNODB_CACHED_INDEXES                 |
+| INNODB_CMP                            |
+| INNODB_CMPMEM                         |
+| INNODB_CMPMEM_RESET                   |
+| INNODB_CMP_PER_INDEX                  |
+| INNODB_CMP_PER_INDEX_RESET            |
+| INNODB_CMP_RESET                      |
+| INNODB_COLUMNS                        |
+| INNODB_DATAFILES                      |
+| INNODB_FIELDS                         |
+| INNODB_FOREIGN                        |
+| INNODB_FOREIGN_COLS                   |
+| INNODB_FT_BEING_DELETED               |
+| INNODB_FT_CONFIG                      |
+| INNODB_FT_DEFAULT_STOPWORD            |
+| INNODB_FT_DELETED                     |
+| INNODB_FT_INDEX_CACHE                 |
+| INNODB_FT_INDEX_TABLE                 |
+| INNODB_INDEXES                        |
+| INNODB_METRICS                        |
+| INNODB_SESSION_TEMP_TABLESPACES       |
+| INNODB_TABLES                         |
+| INNODB_TABLESPACES                    |
+| INNODB_TABLESPACES_BRIEF              |
+| INNODB_TABLESTATS                     |
+| INNODB_TEMP_TABLE_INFO                |
+| INNODB_TRX                            |
+| INNODB_VIRTUAL                        |
+| KEYWORDS                              |
+| KEY_COLUMN_USAGE                      |
+| OPTIMIZER_TRACE                       |
+| PARAMETERS                            |
+| PARTITIONS                            |
+| PLUGINS                               |
+| PROCESSLIST                           |
+| PROFILING                             |
+| REFERENTIAL_CONSTRAINTS               |
+| RESOURCE_GROUPS                       |
+| ROLE_COLUMN_GRANTS                    |
+| ROLE_ROUTINE_GRANTS                   |
+| ROLE_TABLE_GRANTS                     |
+| ROUTINES                              |
+| SCHEMATA                              |
+| SCHEMATA_EXTENSIONS                   |
+| SCHEMA_PRIVILEGES                     |
+| STATISTICS                            |
+| ST_GEOMETRY_COLUMNS                   |
+| ST_SPATIAL_REFERENCE_SYSTEMS          |
+| ST_UNITS_OF_MEASURE                   |
+| TABLES                                |
+| TABLESPACES                           |
+| TABLESPACES_EXTENSIONS                |
+| TABLES_EXTENSIONS                     |
+| TABLE_CONSTRAINTS                     |
+| TABLE_CONSTRAINTS_EXTENSIONS          |
+| TABLE_PRIVILEGES                      |
+| TRIGGERS                              |
+| USER_ATTRIBUTES                       |
+| USER_PRIVILEGES                       |
+| VIEWS                                 |
+| VIEW_ROUTINE_USAGE                    |
+| VIEW_TABLE_USAGE                      |
++---------------------------------------+
+79 rows in set (0.00 sec)
+
+mysql> use information_schema
+Database changed
+mysql> desc table_constraints;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| CONSTRAINT_CATALOG | varchar(64) | NO   |     | NULL    |       |
+| CONSTRAINT_SCHEMA  | varchar(64) | NO   |     | NULL    |       |
+| CONSTRAINT_NAME    | varchar(64) | YES  |     | NULL    |       |
+| TABLE_SCHEMA       | varchar(64) | NO   |     | NULL    |       |
+| TABLE_NAME         | varchar(64) | NO   |     | NULL    |       |
+| CONSTRAINT_TYPE    | varchar(11) | NO   |     |         |       |
+| ENFORCED           | varchar(3)  | NO   |     |         |       |
++--------------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select constraint_name from table_constraints where table_schema='college';
+Empty set (0.00 sec)
+
+mysql> use<database name>;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '<database name>' at line 1
+mysql> use <college>;
+ERROR 1049 (42000): Unknown database '<college>'
+mysql> use college;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables
+    -> \c
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| student           |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table student drop constraint student_chk_1;
+ERROR 3940 (HY000): Constraint 'student_chk_1' does not exist.
+mysql> alter table student drop constraint student_chk_1;
+ERROR 3940 (HY000): Constraint 'student_chk_1' does not exist.
+mysql> drop table if exists student ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table student (roll int primary key , name varchar(20),class varchar(10) not null , marks float , age int check (age>18));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into student values ( 1 , 'riya','dac',95.66,22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values ( 2 , 'priya','dac',94.66,24);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values ( 2 , 'praa','iot',88.26,23);
+ERROR 1062 (23000): Duplicate entry '2' for key 'student.PRIMARY'
+mysql> insert into student values ( 3 , 'prakash','iot',88.26,23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values ( 4 , 'rani','dbda',80.26,24);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values ( 5 , 'rina','auto',55.55,24);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from student;
++------+---------+-------+-------+------+
+| roll | name    | class | marks | age  |
++------+---------+-------+-------+------+
+|    1 | riya    | dac   | 95.66 |   22 |
+|    2 | priya   | dac   | 94.66 |   24 |
+|    3 | prakash | iot   | 88.26 |   23 |
+|    4 | rani    | dbda  | 80.26 |   24 |
+|    5 | rina    | auto  | 55.55 |   24 |
++------+---------+-------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> use information_schema;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++---------------------------------------+
+| Tables_in_information_schema          |
++---------------------------------------+
+| ADMINISTRABLE_ROLE_AUTHORIZATIONS     |
+| APPLICABLE_ROLES                      |
+| CHARACTER_SETS                        |
+| CHECK_CONSTRAINTS                     |
+| COLLATIONS                            |
+| COLLATION_CHARACTER_SET_APPLICABILITY |
+| COLUMNS                               |
+| COLUMNS_EXTENSIONS                    |
+| COLUMN_PRIVILEGES                     |
+| COLUMN_STATISTICS                     |
+| ENABLED_ROLES                         |
+| ENGINES                               |
+| EVENTS                                |
+| FILES                                 |
+| INNODB_BUFFER_PAGE                    |
+| INNODB_BUFFER_PAGE_LRU                |
+| INNODB_BUFFER_POOL_STATS              |
+| INNODB_CACHED_INDEXES                 |
+| INNODB_CMP                            |
+| INNODB_CMPMEM                         |
+| INNODB_CMPMEM_RESET                   |
+| INNODB_CMP_PER_INDEX                  |
+| INNODB_CMP_PER_INDEX_RESET            |
+| INNODB_CMP_RESET                      |
+| INNODB_COLUMNS                        |
+| INNODB_DATAFILES                      |
+| INNODB_FIELDS                         |
+| INNODB_FOREIGN                        |
+| INNODB_FOREIGN_COLS                   |
+| INNODB_FT_BEING_DELETED               |
+| INNODB_FT_CONFIG                      |
+| INNODB_FT_DEFAULT_STOPWORD            |
+| INNODB_FT_DELETED                     |
+| INNODB_FT_INDEX_CACHE                 |
+| INNODB_FT_INDEX_TABLE                 |
+| INNODB_INDEXES                        |
+| INNODB_METRICS                        |
+| INNODB_SESSION_TEMP_TABLESPACES       |
+| INNODB_TABLES                         |
+| INNODB_TABLESPACES                    |
+| INNODB_TABLESPACES_BRIEF              |
+| INNODB_TABLESTATS                     |
+| INNODB_TEMP_TABLE_INFO                |
+| INNODB_TRX                            |
+| INNODB_VIRTUAL                        |
+| KEYWORDS                              |
+| KEY_COLUMN_USAGE                      |
+| OPTIMIZER_TRACE                       |
+| PARAMETERS                            |
+| PARTITIONS                            |
+| PLUGINS                               |
+| PROCESSLIST                           |
+| PROFILING                             |
+| REFERENTIAL_CONSTRAINTS               |
+| RESOURCE_GROUPS                       |
+| ROLE_COLUMN_GRANTS                    |
+| ROLE_ROUTINE_GRANTS                   |
+| ROLE_TABLE_GRANTS                     |
+| ROUTINES                              |
+| SCHEMATA                              |
+| SCHEMATA_EXTENSIONS                   |
+| SCHEMA_PRIVILEGES                     |
+| STATISTICS                            |
+| ST_GEOMETRY_COLUMNS                   |
+| ST_SPATIAL_REFERENCE_SYSTEMS          |
+| ST_UNITS_OF_MEASURE                   |
+| TABLES                                |
+| TABLESPACES                           |
+| TABLESPACES_EXTENSIONS                |
+| TABLES_EXTENSIONS                     |
+| TABLE_CONSTRAINTS                     |
+| TABLE_CONSTRAINTS_EXTENSIONS          |
+| TABLE_PRIVILEGES                      |
+| TRIGGERS                              |
+| USER_ATTRIBUTES                       |
+| USER_PRIVILEGES                       |
+| VIEWS                                 |
+| VIEW_ROUTINE_USAGE                    |
+| VIEW_TABLE_USAGE                      |
++---------------------------------------+
+79 rows in set (0.00 sec)
+
+mysql> desc table_constraints;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| CONSTRAINT_CATALOG | varchar(64) | NO   |     | NULL    |       |
+| CONSTRAINT_SCHEMA  | varchar(64) | NO   |     | NULL    |       |
+| CONSTRAINT_NAME    | varchar(64) | YES  |     | NULL    |       |
+| TABLE_SCHEMA       | varchar(64) | NO   |     | NULL    |       |
+| TABLE_NAME         | varchar(64) | NO   |     | NULL    |       |
+| CONSTRAINT_TYPE    | varchar(11) | NO   |     |         |       |
+| ENFORCED           | varchar(3)  | NO   |     |         |       |
++--------------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select constraint_name from table_constraints where table_schema='college'
+    -> \c
+mysql> select constraint_name from table_constraints where table_schema='college';
++-----------------+
+| CONSTRAINT_NAME |
++-----------------+
+| PRIMARY         |
+| student_chk_1   |
++-----------------+
+2 rows in set (0.00 sec)
+
+mysql> use college;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| student           |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table student drop constraint student_chk_1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| roll  | int         | NO   | PRI | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| class | varchar(10) | NO   |     | NULL    |       |
+| marks | float       | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select count(roll) from student;
++-------------+
+| count(roll) |
++-------------+
+|           5 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(marks) from student;
++--------------------+
+| sum(marks)         |
++--------------------+
+| 414.39001083374023 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select max(marks) from student;
++------------+
+| max(marks) |
++------------+
+|      95.66 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select min(marks) from student;
++------------+
+| min(marks) |
++------------+
+|      55.55 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(marks) from student;
++-------------------+
+| avg(marks)        |
++-------------------+
+| 82.87800216674805 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select max(marks),min(marks) from student;
++------------+------------+
+| max(marks) | min(marks) |
++------------+------------+
+|      95.66 |      55.55 |
++------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select max(age),min(age) from student;
++----------+----------+
+| max(age) | min(age) |
++----------+----------+
+|       24 |       22 |
++----------+----------+
+1 row in set (0.00 sec)
+
+mysql> select *from student order by name;
++------+---------+-------+-------+------+
+| roll | name    | class | marks | age  |
++------+---------+-------+-------+------+
+|    3 | prakash | iot   | 88.26 |   23 |
+|    2 | priya   | dac   | 94.66 |   24 |
+|    4 | rani    | dbda  | 80.26 |   24 |
+|    5 | rina    | auto  | 55.55 |   24 |
+|    1 | riya    | dac   | 95.66 |   22 |
++------+---------+-------+-------+------+
+5 rows in set (0.01 sec)
+
+mysql> select distinct roll from student;
++------+
+| roll |
++------+
+|    1 |
+|    2 |
+|    3 |
+|    4 |
+|    5 |
++------+
+5 rows in set (0.01 sec)
+
+mysql> select name from student where age between 23 and 25
+    -> \c
+mysql> select name from student where age between 23 and 25;
++---------+
+| name    |
++---------+
+| priya   |
+| prakash |
+| rani    |
+| rina    |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select name from student where marks in (select max(marks) from student);
++------+
+| name |
++------+
+| riya |
++------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where marks in (select max(marks) from student);
++------+------+-------+-------+------+
+| roll | name | class | marks | age  |
++------+------+-------+-------+------+
+|    1 | riya | dac   | 95.66 |   22 |
++------+------+-------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> select class, age(marks) from student group by class;
+ERROR 1305 (42000): FUNCTION college.age does not exist
+mysql> select class, avg(marks) from student group by class;
++-------+-------------------+
+| class | avg(marks)        |
++-------+-------------------+
+| dac   | 95.16000366210938 |
+| iot   | 88.26000213623047 |
+| dbda  | 80.26000213623047 |
+| auto  | 55.54999923706055 |
++-------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select class, avg(marks) from student group by class having marks >85 ;
+ERROR 1054 (42S22): Unknown column 'marks' in 'having clause'
+mysql> select class, avg(marks) from student group by class having marks > 85 ;
+ERROR 1054 (42S22): Unknown column 'marks' in 'having clause'
+mysql> select class, avg(marks) from student group by class having avg(marks) > 85 ;
++-------+-------------------+
+| class | avg(marks)        |
++-------+-------------------+
+| dac   | 95.16000366210938 |
+| iot   | 88.26000213623047 |
++-------+-------------------+
+2 rows in set (0.00 sec)
+
+mysql> select class, marks from student group by class having marks > 85 ;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'college.student.marks' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select * from student where name like 'p%a';
++------+-------+-------+-------+------+
+| roll | name  | class | marks | age  |
++------+-------+-------+-------+------+
+|    2 | priya | dac   | 94.66 |   24 |
++------+-------+-------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from student order by marks;
++------+---------+-------+-------+------+
+| roll | name    | class | marks | age  |
++------+---------+-------+-------+------+
+|    5 | rina    | auto  | 55.55 |   24 |
+|    4 | rani    | dbda  | 80.26 |   24 |
+|    3 | prakash | iot   | 88.26 |   23 |
+|    2 | priya   | dac   | 94.66 |   24 |
+|    1 | riya    | dac   | 95.66 |   22 |
++------+---------+-------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by marks desc;
++------+---------+-------+-------+------+
+| roll | name    | class | marks | age  |
++------+---------+-------+-------+------+
+|    1 | riya    | dac   | 95.66 |   22 |
+|    2 | priya   | dac   | 94.66 |   24 |
+|    3 | prakash | iot   | 88.26 |   23 |
+|    4 | rani    | dbda  | 80.26 |   24 |
+|    5 | rina    | auto  | 55.55 |   24 |
++------+---------+-------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by marks desc, class;
++------+---------+-------+-------+------+
+| roll | name    | class | marks | age  |
++------+---------+-------+-------+------+
+|    1 | riya    | dac   | 95.66 |   22 |
+|    2 | priya   | dac   | 94.66 |   24 |
+|    3 | prakash | iot   | 88.26 |   23 |
+|    4 | rani    | dbda  | 80.26 |   24 |
+|    5 | rina    | auto  | 55.55 |   24 |
++------+---------+-------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where marks between 85 and 90;
++------+---------+-------+-------+------+
+| roll | name    | class | marks | age  |
++------+---------+-------+-------+------+
+|    3 | prakash | iot   | 88.26 |   23 |
++------+---------+-------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where roll in (2,5);
++------+-------+-------+-------+------+
+| roll | name  | class | marks | age  |
++------+-------+-------+-------+------+
+|    2 | priya | dac   | 94.66 |   24 |
+|    5 | rina  | auto  | 55.55 |   24 |
++------+-------+-------+-------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where roll not in (2,5);
++------+---------+-------+-------+------+
+| roll | name    | class | marks | age  |
++------+---------+-------+-------+------+
+|    1 | riya    | dac   | 95.66 |   22 |
+|    3 | prakash | iot   | 88.26 |   23 |
+|    4 | rani    | dbda  | 80.26 |   24 |
++------+---------+-------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student values(6, 'yogesh', 'null',719, 23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student where class is null;
+Empty set (0.00 sec)
+
+mysql> select * from student where class is not null;
++------+---------+-------+-------+------+
+| roll | name    | class | marks | age  |
++------+---------+-------+-------+------+
+|    1 | riya    | dac   | 95.66 |   22 |
+|    2 | priya   | dac   | 94.66 |   24 |
+|    3 | prakash | iot   | 88.26 |   23 |
+|    4 | rani    | dbda  | 80.26 |   24 |
+|    5 | rina    | auto  | 55.55 |   24 |
+|    6 | yogesh  | null  |   719 |   23 |
++------+---------+-------+-------+------+
+6 rows in set (0.00 sec)
+
+mysql> select distinct marks from students;
+ERROR 1146 (42S02): Table 'college.students' doesn't exist
+mysql> select distinct marks from student;
++-------+
+| marks |
++-------+
+| 95.66 |
+| 94.66 |
+| 88.26 |
+| 80.26 |
+| 55.55 |
+|   719 |
++-------+
+6 rows in set (0.00 sec)
+
+mysql> 
+

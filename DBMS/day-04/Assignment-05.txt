@@ -1,0 +1,340 @@
+
+*************************************************Q1********************************************************************
+
+
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> select database ();
++-------------+
+| database () |
++-------------+
+| NULL        |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> use depart ;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create table employee1;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table employee1 (id int , name varchar(20),dept_id int ,birth date );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into employee1 values ( 1 , 'Maria Gloria' , 2 , '1994-03-12' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee1 values ( 2 , 'John Smith' , 1 , '1993-02-07' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee1 values ( 3 , 'Gal Rao' , 4 , '1992-09-11' );
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee1 values ( 4 , 'Jakey Smith' , 2 , '1990-08-31' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee1 values ( 5 , 'Rama Saho' , 1 , '1994-12-09' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee1 values ( 6 , 'Maria Gaga' , 4 , '1993-10-09' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee1;
++------+--------------+---------+------------+
+| id   | name         | dept_id | birth      |
++------+--------------+---------+------------+
+|    1 | Maria Gloria |       2 | 1994-03-12 |
+|    2 | John Smith   |       1 | 1993-02-07 |
+|    3 | Gal Rao      |       4 | 1992-09-11 |
+|    4 | Jakey Smith  |       2 | 1990-08-31 |
+|    5 | Rama Saho    |       1 | 1994-12-09 |
+|    6 | Maria Gaga   |       4 | 1993-10-09 |
++------+--------------+---------+------------+
+6 rows in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> select database ();
++-------------+
+| database () |
++-------------+
+| depart      |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> use depart ;
+Database changed
+mysql> create table department1;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table department1 ( dept_id int , dept_name varchar(30) , dept_block varchar (10));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into department1 values ( 1 , 'Computer Science' , 'B-Block');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department1 values ( 2 , 'Information Technology' , 'C-Block');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department1 values ( 3 , 'Mechanical' , 'A-Block');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department1 values ( 4 , 'Electronic Communication' , 'D-Block'  );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from department1;
++---------+--------------------------+------------+
+| dept_id | dept_name                | dept_block |
++---------+--------------------------+------------+
+|       1 | Computer Science         | B-Block    |
+|       2 | Information Technology   | C-Block    |
+|       3 | Mechanical               | A-Block    |
+|       4 | Electronic Communication | D-Block    |
++---------+--------------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select t1.name, t1.birth, t2.dept_name, t2.dept_block from employee1 t1 join department1 t2 on t1.dept_id = t2.dept_id;
++--------------+------------+--------------------------+------------+
+| name         | birth      | dept_name                | dept_block |
++--------------+------------+--------------------------+------------+
+| Maria Gloria | 1994-03-12 | Information Technology   | C-Block    |
+| John Smith   | 1993-02-07 | Computer Science         | B-Block    |
+| Gal Rao      | 1992-09-11 | Electronic Communication | D-Block    |
+| Jakey Smith  | 1990-08-31 | Information Technology   | C-Block    |
+| Rama Saho    | 1994-12-09 | Computer Science         | B-Block    |
+| Maria Gaga   | 1993-10-09 | Electronic Communication | D-Block    |
++--------------+------------+--------------------------+------------+
+6 rows in set (0.00 sec)
+
+
+
+********************************************************************Q4**********************************************************************************************************************************
+
+dac@dac-Veriton-M200-H310:~/PG-DAC/DBMS/day-04$ sudo mysql -u root -p
+[sudo] password for dac: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> use depart ;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select database ();
++-------------+
+| database () |
++-------------+
+| depart      |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_depart |
++------------------+
+| employee         |
+| reward           |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee;
++------+---------+----------+---------+--------------+------------+
+| id   | fname   | lname    | salary  | joining_date | department |
++------+---------+----------+---------+--------------+------------+
+|    1 | Bob     | Kinto    | 1000000 | 2019-01-20   | Finance    |
+|    2 | Jerry   | Kansxo   | 6000000 | 2019-01-15   | IT         |
+|    3 | Philip  | Jose     | 8900000 | 2019-02-05   | Banking    |
+|    4 | John    | Abraham  | 2000000 | 2019-02-25   | Insurance  |
+|    5 | Michael | Mathew   | 2200000 | 2019-02-28   | Finance    |
+|    6 | Alex    | chreketo | 4000000 | 2019-05-10   | IT         |
+|    7 | Yohan   | Soso     | 1230000 | 2019-06-20   | Banking    |
++------+---------+----------+---------+--------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> slect * from reward;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slect * from reward' at line 1
+mysql> show tables;
++------------------+
+| Tables_in_depart |
++------------------+
+| employee         |
+| reward           |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from reward;
++--------+-------------+--------+
+| ref_id | reward_date | amount |
++--------+-------------+--------+
+|      1 | 2019-05-11  |   1000 |
+|      2 | 2019-02-15  |   5000 |
+|      3 | 2019-04-22  |   2000 |
+|      1 | 2019-06-20  |   8000 |
++--------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee;
++------+---------+----------+---------+--------------+------------+
+| id   | fname   | lname    | salary  | joining_date | department |
++------+---------+----------+---------+--------------+------------+
+|    1 | Bob     | Kinto    | 1000000 | 2019-01-20   | Finance    |
+|    2 | Jerry   | Kansxo   | 6000000 | 2019-01-15   | IT         |
+|    3 | Philip  | Jose     | 8900000 | 2019-02-05   | Banking    |
+|    4 | John    | Abraham  | 2000000 | 2019-02-25   | Insurance  |
+|    5 | Michael | Mathew   | 2200000 | 2019-02-28   | Finance    |
+|    6 | Alex    | chreketo | 4000000 | 2019-05-10   | IT         |
+|    7 | Yohan   | Soso     | 1230000 | 2019-06-20   | Banking    |
++------+---------+----------+---------+--------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select fname ,lname from employee;
++---------+----------+
+| fname   | lname    |
++---------+----------+
+| Bob     | Kinto    |
+| Jerry   | Kansxo   |
+| Philip  | Jose     |
+| John    | Abraham  |
+| Michael | Mathew   |
+| Alex    | chreketo |
+| Yohan   | Soso     |
++---------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select fname as "employee name " from employee ;
++----------------+
+| employee name  |
++----------------+
+| Bob            |
+| Jerry          |
+| Philip         |
+| John           |
+| Michael        |
+| Alex           |
+| Yohan          |
++----------------+
+7 rows in set (0.00 sec)
+
+mysql> select lower(lname) as lname from employee;
++----------+
+| lname    |
++----------+
+| kinto    |
+| kansxo   |
+| jose     |
+| abraham  |
+| mathew   |
+| chreketo |
+| soso     |
++----------+
+7 rows in set (0.00 sec)
+
+mysql> select upper(lname) as lname from employee;
++----------+
+| lname    |
++----------+
+| KINTO    |
+| KANSXO   |
+| JOSE     |
+| ABRAHAM  |
+| MATHEW   |
+| CHREKETO |
+| SOSO     |
++----------+
+7 rows in set (0.00 sec)
+
+mysql> select distinct department from employee;
++------------+
+| department |
++------------+
+| Finance    |
+| IT         |
+| Banking    |
+| Insurance  |
++------------+
+4 rows in set (0.00 sec)
+
+mysql> select substring(fname ,1,4) as first_4_characterfrom employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> select substring(fname ,1,4) as first_4_character from employee;
++-------------------+
+| first_4_character |
++-------------------+
+| Bob               |
+| Jerr              |
+| Phil              |
+| John              |
+| Mich              |
+| Alex              |
+| Yoha              |
++-------------------+
+
