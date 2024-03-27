@@ -1,0 +1,181 @@
+ac@dac-Veriton-M200-H310:~$ sudo mysql -u root -p
+[sudo] password for dac: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| EMPLOYEE_COMPANY   |
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| company            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+16 rows in set (0.01 sec)
+
+mysql> use EMPLOYEE_COMPANY  
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> use EMPLOYEE_COMPANY ;
+Database changed
+mysql> SELECT * FROM ClientTable WHERE cid = 'c-1';
++----------+------------+------+
+| ClientId | ClientName | cid  |
++----------+------------+------+
+| cl-1     | ABC Group  | c-1  |
+| cl-2     | PQR        | c-1  |
++----------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql>  
+mysql> SELECT * FROM Employee WHERE Department = 'E-102';
++-------+---------+------------+------------+-----------------+-----------+
+| Empid | EmpName | Department | ContactNo  | EmailId         | EmpHeadId |
++-------+---------+------------+------------+-----------------+-----------+
+|   104 | Rahul   | E-102      | 1234567890 | rahul@yahoo.com |       105 |
++-------+---------+------------+------------+-----------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> CREATE PROCEDURE CalculateAverageSalary
+    -> AS
+    -> BEGIN
+    ->     SELECT AVG(Salary) AS AverageSalary FROM EmpSalary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS
+BEGIN
+    SELECT AVG(Salary) AS AverageSalary FROM EmpSalary' at line 2
+mysql> END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> create procedure CalculateAverageSalary
+    -> as
+    -> begin
+    -> select AVG(Salary) AS AverageSalary FROM EmpSalary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as
+begin
+select AVG(Salary) AS AverageSalary FROM EmpSalary' at line 2
+mysql> create procedure CalculateAverageSalary as begin select AVG(Salary) AS AverageSalary FROM EmpSalary; end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as begin select AVG(Salary) AS AverageSalary FROM EmpSalary' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> 
+mysql> SELECT * 
+    -> FROM Employee 
+    -> JOIN EmpDept ON Employee.Department = EmpDept.DeptId;
++-------+----------+------------+------------+--------------------+-----------+--------+-------------+----------+----------+
+| Empid | EmpName  | Department | ContactNo  | EmailId            | EmpHeadId | DeptId | DeptName    | Dept_off | DeptHead |
++-------+----------+------------+------------+--------------------+-----------+--------+-------------+----------+----------+
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 | E-101  | HR          | Monday   |      105 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 | E-101  | HR          | Monday   |      105 |
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 | E-101  | HR          | Monday   |      105 |
+|   104 | Rahul    | E-102      | 1234567890 | rahul@yahoo.com    |       105 | E-102  | Development | Tuesday  |      101 |
+|   102 | Priya    | E-104      | 1234567890 | priya@yahoo.com    |       103 | E-104  | Sales       | Sunday   |      104 |
++-------+----------+------------+------------+--------------------+-----------+--------+-------------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> 
+mysql> CREATE TABLE Employee_Copy LIKE Employee;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Employee_Copy (Empid, EmpName, Department, ContactNo, EmailId, EmpHeadId)
+    -> VALUES (106, 'John', 'E-101', '9876543210', 'john@gmail.com', 101),
+    ->        (107, 'Emma', 'E-102', '9876543211', 'emma@gmail.com', 102),
+    ->        (108, 'Mike', 'E-103', '9876543212', 'mike@gmail.com', 103);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Employee
+    -> UNION
+    -> SELECT * FROM Employee_Copy;
++-------+----------+------------+------------+--------------------+-----------+
+| Empid | EmpName  | Department | ContactNo  | EmailId            | EmpHeadId |
++-------+----------+------------+------------+--------------------+-----------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+|   102 | Priya    | E-104      | 1234567890 | priya@yahoo.com    |       103 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+|   104 | Rahul    | E-102      | 1234567890 | rahul@yahoo.com    |       105 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
+|   106 | John     | E-101      | 9876543210 | john@gmail.com     |       101 |
+|   107 | Emma     | E-102      | 9876543211 | emma@gmail.com     |       102 |
+|   108 | Mike     | E-103      | 9876543212 | mike@gmail.com     |       103 |
++-------+----------+------------+------------+--------------------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee
+    -> EXCEPT
+    -> SELECT * FROM Employee_Copy;
++-------+----------+------------+------------+--------------------+-----------+
+| Empid | EmpName  | Department | ContactNo  | EmailId            | EmpHeadId |
++-------+----------+------------+------------+--------------------+-----------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+|   102 | Priya    | E-104      | 1234567890 | priya@yahoo.com    |       103 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+|   104 | Rahul    | E-102      | 1234567890 | rahul@yahoo.com    |       105 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
++-------+----------+------------+------------+--------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee
+    -> INTERSECT
+    -> SELECT * FROM Employee_Copy;
+Empty set (0.00 sec)
+
+mysql> 
+mysql> CREATE PROCEDURE GetEmployeeDetails (@EmpId INT)
+    -> AS
+    -> BEGIN
+    ->     SELECT E.Empid, ES.Salary, E.ContactNo, ED.DeptName 
+    ->     FROM Employee E 
+    ->     JOIN EmpSalary ES ON E.Empid = ES.EmpId 
+    ->     JOIN EmpDept ED ON E.Department = ED.DeptId 
+    ->     WHERE E.Empid = @EmpId;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@EmpId INT)
+AS
+BEGIN
+    SELECT E.Empid, ES.Salary, E.ContactNo, ED.DeptName 
+  ' at line 1
+mysql> END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> 
+mysql> 
+mysql> CREATE VIEW ClientProjectDetails AS
+    -> SELECT CP.ClientName, EP.ProjectId, EP.StartYear, EP.EndYear
+    -> FROM ClientTable CP
+    -> JOIN EmpProject EP ON CP.ClientId = EP.ClientID;
+ERROR 1050 (42S01): Table 'ClientProjectDetails' already exists
+mysql> CREATE VIEW ClientProjectDetails1 AS SELECT CP.ClientName, EP.ProjectId, EP.StartYear, EP.EndYear FROM ClientTable CP JOIN EmpProject EP ON CP.ClientId = EP.ClientID;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> SELECT AVG(Salary) AS AverageSalary FROM EmpSalary WHERE IsPermanent = 'Yes';
++---------------+
+| AverageSalary |
++---------------+
+|     4050.0000 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> 
+

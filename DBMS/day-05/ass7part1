@@ -1,0 +1,1025 @@
+dac@dac-Veriton-M200-H310:~/PG-DAC/DBMS/day-05$ sudo mysql -u root -p
+[sudo] password for dac: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| company            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+15 rows in set (0.01 sec)
+
+mysql> select database ();
++-------------+
+| database () |
++-------------+
+| NULL        |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> use EMPLOYEE_COMPANY ;
+ERROR 1049 (42000): Unknown database 'EMPLOYEE_COMPANY'
+mysql> create database EMPLOYEE_COMPANY;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| EMPLOYEE_COMPANY   |
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| company            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+16 rows in set (0.00 sec)
+
+mysql> use EMPLOYEE_COMPANY; 
+Database changed
+mysql> create table Employee (Empid int , EmpName varchar(50), Department varchar(50) ,ContactNo varchar(15), EmailId varchar(25), EmpHeadId int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into Employee values ( '101', 'Isha' ,'E-101' ,'1234567890' ,'isha@gmail.com', '105');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values ( '102' ,'Priya', 'E-104' ,'1234567890' ,'priya@yahoo.com' ,'103');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values ( '103', 'Neha', 'E-101' ,'1234567890' ,'neha@gmail.com' ,'101' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values ('104', 'Rahul', 'E-102' ,'1234567890', 'rahul@yahoo.com' ,'105');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Employee values('105', 'Abhishek', 'E-101', '1234567890', 'abhishek@gmail.com', '102' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show tables ;
++----------------------------+
+| Tables_in_EMPLOYEE_COMPANY |
++----------------------------+
+| Employee                   |
++----------------------------+
+1 row in set (0.00 sec)
+
+mysql> desc Employee ;   
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Empid      | int         | YES  |     | NULL    |       |
+| EmpName    | varchar(50) | YES  |     | NULL    |       |
+| Department | varchar(50) | YES  |     | NULL    |       |
+| ContactNo  | varchar(15) | YES  |     | NULL    |       |
+| EmailId    | varchar(25) | YES  |     | NULL    |       |
+| EmpHeadId  | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> create table EmpDept ( DeptId varchar(20), DeptName varchar (30), Dept_off varchar(50), DeptHead int );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into  EmpDept values (  'E-101', 'HR', 'Monday' ,'105');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into  EmpDept values ( 'E-102', 'Development', 'Tuesday', '101');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  EmpDept values ('E-103', 'Hous Keeping', 'Saturday', '103' );
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  EmpDept values ( 'E-104', 'Sales', 'Sunday', '104');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  EmpDept values ('E-105', 'Purchage', 'Tuesday', '104');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show tables ;
++----------------------------+
+| Tables_in_EMPLOYEE_COMPANY |
++----------------------------+
+| EmpDept                    |
+| Employee                   |
++----------------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc EmpDept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DeptId   | varchar(20) | YES  |     | NULL    |       |
+| DeptName | varchar(30) | YES  |     | NULL    |       |
+| Dept_off | varchar(50) | YES  |     | NULL    |       |
+| DeptHead | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table EmpSalary (EmpId int , Salary int ,IsPermanent varchar(3) );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into  EmpSalary values ( '101', '2000' ,'Yes' );
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  EmpSalary values ( 102, 10000, 'Yes' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  EmpSalary values (103 ,5000 ,'No' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  EmpSalary values (104, 1900, 'Yes');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into  EmpSalary values ( 105 ,2300, 'Yes' );
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc EmpSalary ;
++-------------+------------+------+-----+---------+-------+
+| Field       | Type       | Null | Key | Default | Extra |
++-------------+------------+------+-----+---------+-------+
+| EmpId       | int        | YES  |     | NULL    |       |
+| Salary      | int        | YES  |     | NULL    |       |
+| IsPermanent | varchar(3) | YES  |     | NULL    |       |
++-------------+------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------------------+
+| Tables_in_EMPLOYEE_COMPANY |
++----------------------------+
+| EmpDept                    |
+| EmpSalary                  |
+| Employee                   |
++----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> desc EmpSalary ;
++-------------+------------+------+-----+---------+-------+
+| Field       | Type       | Null | Key | Default | Extra |
++-------------+------------+------+-----+---------+-------+
+| EmpId       | int        | YES  |     | NULL    |       |
+| Salary      | int        | YES  |     | NULL    |       |
+| IsPermanent | varchar(3) | YES  |     | NULL    |       |
++-------------+------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from EmpSalary ;
++-------+--------+-------------+
+| EmpId | Salary | IsPermanent |
++-------+--------+-------------+
+|   101 |   2000 | Yes         |
+|   102 |  10000 | Yes         |
+|   103 |   5000 | No          |
+|   104 |   1900 | Yes         |
+|   105 |   2300 | Yes         |
++-------+--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Projects (
+    ->   ProjectId VARCHAR(10) PRIMARY KEY, -- Assuming project IDs are short alphanumeric strings
+    -> \c
+mysql> create table Project ( ProjectId VARCHAR (20), Duration INT );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> 
+mysql> INSERT INTO Projects (ProjectId, Duration)
+    -> VALUES ('p-1', 23),
+    ->        ('p-2', 15),
+    ->        ('p-3', 45),
+    ->        ('p-4', 2),
+    ->        ('p-5', 30);
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.Projects' doesn't exist
+mysql> INSERT INTO Projects values  ('p-1', 23),
+    ->        ('p-2', 15),
+    ->        ('p-3', 45),
+    ->        ('p-4', 2),
+    ->        ('p-5', 30);
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.Projects' doesn't exist
+mysql> insert into Projects values (  'p-1', 23 );
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.Projects' doesn't exist
+mysql> INSERT INTO Project values  ('p-1', 23),        ('p-2', 15),        ('p-3', 45),        ('p-4', 2),        ('p-5', 30);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE Country ( cid varchar (10) ,cname varchar (30));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Country (cid, cname)
+    -> VALUES ('c-1', 'India'),
+    ->        ('c-2', 'USA'),
+    ->        ('c-3', 'China'),
+    ->        ('c-4', 'Pakistan'),
+    ->        ('c-5', 'Russia');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> create table ClientTable ( ClientId varchar(30) ,ClientName varchar(50) ,cid varchar(10)); 
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO ClientTable (ClientId, ClientName, cid)
+    -> VALUES ('cl-1', 'ABC Group', 'c-1'),
+    ->        ('cl-2', 'PQR', 'c-1'),
+    ->        ('cl-3', 'XYZ', 'c-2'),
+    ->        ('cl-4', 'tech altum', 'c-3'),
+    ->        ('cl-5', 'mnp', 'c-5');
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE EmpProject (
+    ->   EmpId INT PRIMARY KEY,
+    ->   ProjectId VARCHAR(10),
+    ->   ClientID VARCHAR(10),
+    ->   StartYear INT,
+    ->   EndYear INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO EmpProject (EmpId, ProjectId, ClientID, StartYear, EndYear)
+    -> VALUES (101, 'p-1', 'Cl-1', 2010, 2010),
+    ->        (102, 'p-2', 'Cl-2', 2010, 2012),
+    ->        (103, 'p-1', 'Cl-3', 2013, NULL),
+    ->        (104, 'p-4', 'Cl-1', 2014, 2015),
+    ->        (105, 'p-4', 'Cl-5', 2015, NULL);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Employee WHERE name LIKE 'P%';
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> SELECT * FROM Employee WHERE EmpName LIKE 'P%';
++-------+---------+------------+------------+-----------------+-----------+
+| Empid | EmpName | Department | ContactNo  | EmailId         | EmpHeadId |
++-------+---------+------------+------------+-----------------+-----------+
+|   102 | Priya   | E-104      | 1234567890 | priya@yahoo.com |       103 |
++-------+---------+------------+------------+-----------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS permanent_count
+    -> FROM Employee
+    -> WHERE is_permanent = TRUE AND salary > 5000;
+ERROR 1054 (42S22): Unknown column 'is_permanent' in 'where clause'
+mysql> SELECT COUNT(*) AS permanent_count
+    -> FROM Employee
+    -> WHERE is_permanent = TRUE AND salary > 5000;
+ERROR 1054 (42S22): Unknown column 'is_permanent' in 'where clause'
+mysql> Table Name:- Employee
+    -> Empid EmpName Department ContactNo EmailId EmpHeadId
+    -> 101 Isha E-101 1234567890 isha@gmail.com 105
+    -> 102 Priya E-104 1234567890 priya@yahoo.com 103
+    -> 103 Neha E-101 1234567890 neha@gmail.com 101
+    -> 104 Rahul E-102 1234567890 rahul@yahoo.com 105
+    -> 105 Abhishek E-101 1234567890 abhishek@gmail.com 102
+    -> 
+    -> Table :- EmpDept
+    -> DeptId DeptName Dept_off DeptHead
+    -> E-101 HR Monday 105
+    -> E-102 Development Tuesday 101
+    -> E-103 Hous Keeping Saturday 103
+    -> E-104 Sales Sunday 104
+    -> E-105 Purchage Tuesday 104
+    -> Table :- EmpSalary
+    -> EmpId Salary IsPermanent
+    -> 101 2000 Yes
+    -> 102 10000 Yes
+    -> 103 5000 No
+    -> 104 1900 Yes
+    -> 105 2300 Yes
+    -> Table :- Project
+    -> ProjectId Duration
+    -> p-1 23
+    -> p-2 15
+    -> p-3 45
+    -> p-4 2
+    -> p-5 30
+    -> 
+    -> Table :- Country
+    -> 
+    -> cid cname
+    -> c-1 India
+    -> c-2 USA
+    -> c-3 China
+    -> c-4 Pakistan
+    -> c-5 Russia
+    -> 
+    -> Table :- ClientTable
+    -> ClientId ClientName cid
+    -> cl-1 ABC Group c-1
+    -> cl-2 PQR c-1
+    -> cl-3 XYZ c-2
+    -> cl-4 tech altum c-3
+    -> cl-5 mnp c-5
+    -> 
+    -> Table :- EmpProject
+    -> EmpId ProjectId ClientID StartYear EndYear
+    -> 101 p-1 Cl-1 2010 2010
+    -> 102 p-2 Cl-2 2010 2012
+    -> 103 p-1 Cl-3 2013
+    -> 104 p-4 Cl-1 2014 2015
+    -> 105 p-4 Cl-5 2015
+    -> 
+    -> 1. Select the detail of the employee whose name start with P.
+    -> 2. How many permanent candidate take salary more than 5000.
+    -> 3. Select the detail of employee whose emailId is in gmail.
+    -> 4. Select the details of the employee who work either for department E-104 or E-102.
+    -> 5. What is the department name for DeptID E-102?
+    -> 6. What is total salarythat is paid to permanent employees?
+    -> 7. List name of all employees whose name ends with a.
+    -> 8. List the number of department of employees in each project.
+    -> 9. How many project started in year 2010.
+    -> 10. How many project started and finished in the same year.
+    -> 11. Select the name of the employee whose name's 3rd charactor is 'h'.
+    '> 12. Select the department name of the company which is assigned to the employee whose
+    '> employee id is grater 103.
+    '> 13. Select the name of the employee who is working under Abhishek.
+    '> 14. Select the name of the employee who is department head of HR.
+    '> 15. Select the name of the employee head who is permanent.
+    '> 16. Select the name and email of the Dept Head who is not Permanent.
+    '> 17. Select the employee whose department off is monday
+    '> 18. Select the indian clients details.
+    '> 19. Select the details of all employee working in development department.
+    '> 20. Create a procedure to calculate the average salaries of employees.
+    '> 21. Join first tow tables using inner join.
+    '> 22. Create a copy of employee table, add three extra entries in it and find the union, difference
+    '> and intersect.
+    '> 23. Create a procedure to pass employee id as input and generate his id, salary, contact number
+    '> and department name as output.
+    '> 24. Create a view for the data retrieved client name, project id, start and end year.
+    '> 25. Calculate average salary of permanent employees.
+    '> 26. Create a function to print department off when department name is given as input.
+    '> 27. Write a function to deduct the 10% TDS from employees salary. The selct statement should
+    '> generate empid, salary after TDS, and department name on screen.
+    '> 28. Write a cursor to extract id, name, contact and email from first table and store it in another
+    '> tenporary table.
+    '> 29. Create a trigger on first table to check that user inserted dept head id between 101 and 105
+    '> or not. If he doesnt enter the same, make dept head id as 100.
+    '> 30. Create a trigger to create the log for updation done on first two tables. The log table will
+    '> contain the changes made by user on both of these tables.\c
+    '> \c
+    '> 
+    '> 
+    '> 
+    '> ^DBye
+dac@dac-Veriton-M200-H310:~/PG-DAC/DBMS/day-05$ sudo mysql -u root -p
+[sudo] password for dac: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SELECT COUNT(*) AS permanent_count FROM Employee WHERE IsPermanent = 'Yes' AND Salary > 5000;
+ERROR 1046 (3D000): No database selected
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| EMPLOYEE_COMPANY   |
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| company            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+16 rows in set (0.00 sec)
+
+mysql> use EMPLOYEE_COMPANY ;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------------------+
+| Tables_in_EMPLOYEE_COMPANY |
++----------------------------+
+| ClientTable                |
+| Country                    |
+| EmpDept                    |
+| EmpProject                 |
+| EmpSalary                  |
+| Employee                   |
+| Project                    |
++----------------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from ClietTable;
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.ClietTable' doesn't exist
+mysql> select * from ClientTable;
++----------+------------+------+
+| ClientId | ClientName | cid  |
++----------+------------+------+
+| cl-1     | ABC Group  | c-1  |
+| cl-2     | PQR        | c-1  |
+| cl-3     | XYZ        | c-2  |
+| cl-4     | tech altum | c-3  |
+| cl-5     | mnp        | c-5  |
++----------+------------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Country ;
++------+----------+
+| cid  | cname    |
++------+----------+
+| c-1  | India    |
+| c-2  | USA      |
+| c-3  | China    |
+| c-4  | Pakistan |
+| c-5  | Russia   |
++------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from  EmpDept   ;
++--------+--------------+----------+----------+
+| DeptId | DeptName     | Dept_off | DeptHead |
++--------+--------------+----------+----------+
+| E-101  | HR           | Monday   |      105 |
+| E-102  | Development  | Tuesday  |      101 |
+| E-103  | Hous Keeping | Saturday |      103 |
+| E-104  | Sales        | Sunday   |      104 |
+| E-105  | Purchage     | Tuesday  |      104 |
++--------+--------------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from   EmpProject   ;
++-------+-----------+----------+-----------+---------+
+| EmpId | ProjectId | ClientID | StartYear | EndYear |
++-------+-----------+----------+-----------+---------+
+|   101 | p-1       | Cl-1     |      2010 |    2010 |
+|   102 | p-2       | Cl-2     |      2010 |    2012 |
+|   103 | p-1       | Cl-3     |      2013 |    NULL |
+|   104 | p-4       | Cl-1     |      2014 |    2015 |
+|   105 | p-4       | Cl-5     |      2015 |    NULL |
++-------+-----------+----------+-----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from  EmpSalary     ;
++-------+--------+-------------+
+| EmpId | Salary | IsPermanent |
++-------+--------+-------------+
+|   101 |   2000 | Yes         |
+|   102 |  10000 | Yes         |
+|   103 |   5000 | No          |
+|   104 |   1900 | Yes         |
+|   105 |   2300 | Yes         |
++-------+--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from  Employee      ;
++-------+----------+------------+------------+--------------------+-----------+
+| Empid | EmpName  | Department | ContactNo  | EmailId            | EmpHeadId |
++-------+----------+------------+------------+--------------------+-----------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+|   102 | Priya    | E-104      | 1234567890 | priya@yahoo.com    |       103 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+|   104 | Rahul    | E-102      | 1234567890 | rahul@yahoo.com    |       105 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
++-------+----------+------------+------------+--------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Project;
++-----------+----------+
+| ProjectId | Duration |
++-----------+----------+
+| p-1       |       23 |
+| p-2       |       15 |
+| p-3       |       45 |
+| p-4       |        2 |
+| p-5       |       30 |
++-----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee WHERE EmpName LIKE 'P%';
++-------+---------+------------+------------+-----------------+-----------+
+| Empid | EmpName | Department | ContactNo  | EmailId         | EmpHeadId |
++-------+---------+------------+------------+-----------------+-----------+
+|   102 | Priya   | E-104      | 1234567890 | priya@yahoo.com |       103 |
++-------+---------+------------+------------+-----------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS permanent_count FROM Employee WHERE IsPermanent = 'Yes' AND Salary > 5000;
+ERROR 1054 (42S22): Unknown column 'IsPermanent' in 'where clause'
+mysql> SELECT COUNT(*) AS permanent_count FROM EmployeeSalary WHERE IsPermanent = 'Yes' AND Salary > 5000;
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.EmployeeSalary' doesn't exist
+mysql> SELECT COUNT(*) FROM EmpSalary WHERE IsPermanent = 'Yes' AND Salary > 5000;
++----------+
+| COUNT(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Employee WHERE EmailId LIKE '%@gmail.com';
++-------+----------+------------+------------+--------------------+-----------+
+| Empid | EmpName  | Department | ContactNo  | EmailId            | EmpHeadId |
++-------+----------+------------+------------+--------------------+-----------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
++-------+----------+------------+------------+--------------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee WHERE Department IN ('E-104', 'E-101');
++-------+----------+------------+------------+--------------------+-----------+
+| Empid | EmpName  | Department | ContactNo  | EmailId            | EmpHeadId |
++-------+----------+------------+------------+--------------------+-----------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+|   102 | Priya    | E-104      | 1234567890 | priya@yahoo.com    |       103 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
++-------+----------+------------+------------+--------------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT DeptName FROM EmpDept WHERE DeptId = 'E-102';
++-------------+
+| DeptName    |
++-------------+
+| Development |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(Salary) AS total_salary FROM Employee WHERE IsPermanent = 'Yes';
+ERROR 1054 (42S22): Unknown column 'Salary' in 'field list'
+mysql> SELECT SUM(EmpSalary) AS total_salary FROM Employee WHERE IsPermanent = 'Yes';
+ERROR 1054 (42S22): Unknown column 'EmpSalary' in 'field list'
+mysql> SELECT SUM(Salary) AS total_salary FROM EmpSalary WHERE IsPermanent = 'Yes';
++--------------+
+| total_salary |
++--------------+
+|        16200 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Employee WHERE EmpName LIKE '%a';
++-------+---------+------------+------------+-----------------+-----------+
+| Empid | EmpName | Department | ContactNo  | EmailId         | EmpHeadId |
++-------+---------+------------+------------+-----------------+-----------+
+|   101 | Isha    | E-101      | 1234567890 | isha@gmail.com  |       105 |
+|   102 | Priya   | E-104      | 1234567890 | priya@yahoo.com |       103 |
+|   103 | Neha    | E-101      | 1234567890 | neha@gmail.com  |       101 |
++-------+---------+------------+------------+-----------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT project_id, COUNT(DISTINCT department_id) AS department_count
+    -> FROM EmpProject
+    -> GROUP BY project_id;
+ERROR 1054 (42S22): Unknown column 'project_id' in 'field list'
+mysql> SELECT ProjectId, COUNT(DISTINCT DeptId) AS department_count FROM EmpProject GROUP BY ProjectId;
+ERROR 1054 (42S22): Unknown column 'DeptId' in 'field list'
+mysql> SELECT ProjectId, COUNT(DISTINCT Department) AS department_count FROM EmpProject GROUP BY ProjectId;
+ERROR 1054 (42S22): Unknown column 'Department' in 'field list'
+mysql> SELECT ProjectId, COUNT(DISTINCT DeptId) AS department_count FROM EmpProject GROUP BY ProjectId;
+ERROR 1054 (42S22): Unknown column 'DeptId' in 'field list'
+mysql> SELECT ProjectId, COUNT(DISTINCT DeptId) AS department_count FROM EmpProject GROUP BY ProjectId;
+ERROR 1054 (42S22): Unknown column 'DeptId' in 'field list'
+mysql> SELECT project_id, COUNT(DISTINCT department_id) AS department_count
+    -> FROM EmpProject
+    -> GROUP BY project_id;
+ERROR 1054 (42S22): Unknown column 'project_id' in 'field list'
+mysql> SELECT ProjectId, COUNT(DISTINCT department_id) AS department_count FROM EmpProject GROUP BY project_id;
+ERROR 1054 (42S22): Unknown column 'department_id' in 'field list'
+mysql> SELECT ProjectId, COUNT(DISTINCT DeptID) AS department_count FROM EmpProject GROUP BY project_id;
+ERROR 1054 (42S22): Unknown column 'DeptID' in 'field list'
+mysql> SELECT ProjectId, COUNT(DISTINCT DeptId) AS department_count FROM EmpProject GROUP BY ProjectId;
+ERROR 1054 (42S22): Unknown column 'DeptId' in 'field list'
+mysql> SELECT a.ProjectId, COUNT(DISTINCT b.DeptId) AS department_count FROM EmpProject a join EmpDept b on a.ProjectId=b.DeptId GROUP BY a.ProjectId;
+Empty set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS projects_started FROM Project WHERE Duration > 0 AND YEAR(StartDate) = 2010;
+ERROR 1054 (42S22): Unknown column 'StartDate' in 'where clause'
+mysql> SELECT COUNT(*) AS projects_started FROM EmpProject WHERE Duration > 0 AND YEAR(StartYear) = 2010;
+ERROR 1054 (42S22): Unknown column 'Duration' in 'where clause'
+mysql> SELECT COUNT(*) AS projects_started FROM EmpProject WHERE StartYear = 2010;
++------------------+
+| projects_started |
++------------------+
+|                2 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS same_year_projects FROM Project WHERE EndDate IS NOT NULL AND YEAR(StartDate) = YEAR(EndDate);
+ERROR 1054 (42S22): Unknown column 'EndDate' in 'where clause'
+mysql> SELECT COUNT(*) AS FROM EmpProject WHERE StartYear = EndYear;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM EmpProject WHERE StartYear = EndYear' at line 1
+mysql> SELECT COUNT(*) FROM EmpProject WHERE StartYear = EndYear;
++----------+
+| COUNT(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Employee WHERE SUBSTRING(EmpName, 3, 1) = 'h';
++-------+----------+------------+------------+--------------------+-----------+
+| Empid | EmpName  | Department | ContactNo  | EmailId            | EmpHeadId |
++-------+----------+------------+------------+--------------------+-----------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |       105 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |       101 |
+|   104 | Rahul    | E-102      | 1234567890 | rahul@yahoo.com    |       105 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |       102 |
++-------+----------+------------+------------+--------------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT DeptName FROM Employee E JOIN EmpDept ED ON E.Department = ED.DeptId WHERE E.Empid > 103;
++-------------+
+| DeptName    |
++-------------+
+| HR          |
+| Development |
++-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT EmpName FROM Employee E JOIN Manager M ON E.EmpHeadId = M.EmpId WHERE M.Name = 'Abhishek';
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.Manager' doesn't exist
+mysql> SELECT EmpName FROM Employee E JOIN Employee M ON E.EmpHeadId = M.EmpId WHERE M.Name = 'Abhishek';
+ERROR 1052 (23000): Column 'EmpName' in field list is ambiguous
+mysql> SELECT E.EmpName FROM Employee E JOIN Employee M ON E.EmpHeadId = M.EmpId WHERE M.Name = 'Abhishek';
+ERROR 1054 (42S22): Unknown column 'M.Name' in 'where clause'
+mysql> SELECT E.EmpName FROM Employee E JOIN Employee M ON E.EmpHeadId = M.EmpId WHERE M.EmpName = 'Abhishek';
++---------+
+| EmpName |
++---------+
+| Isha    |
+| Rahul   |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT EmpName FROM Employee E JOIN EmpDept ED ON E.Department = ED.DeptId JOIN DeptHead DH ON E.Empid = DH.EmployeeId WHERE DH.DepartmentName = 'HR';
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.DeptHead' doesn't exist
+mysql> SELECT E.EmpName FROM Employee E JOIN EmpDept ED ON E.Department = ED.DeptId JOIN DeptHead DH ON E.Empid = DH.EmpId WHERE DH.DeptName = 'HR';
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.DeptHead' doesn't exist
+mysql> SELECT E.EmpName FROM Employee E JOIN EmpDept ED ON E.Department = ED.DeptId where ED.DeptName='HR' and E.EmpId=ED.DeptHead;
++----------+
+| EmpName  |
++----------+
+| Abhishek |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT EmpName FROM Employee E JOIN EmpDept ED ON E.Department = ED.DeptId JOIN DeptHead DH ON E.Empid = DH.EmpId WHERE E.IsPermanent = 'Yes';
+ERROR 1146 (42S02): Table 'EMPLOYEE_COMPANY.DeptHead' doesn't exist
+mysql> SELECT E.EmpName FROM Employee E JOIN EmpDept ED ON E.EmpId = ED.DeptHead JOIN EmpSalary DH ON E.EmpId = DH.EmpId WHERE E.IsPermanent = 'Yes';
+ERROR 1054 (42S22): Unknown column 'E.IsPermanent' in 'where clause'
+mysql> SELECT E.EmpName FROM Employee E JOIN EmpDept ED ON E.EmpId = ED.DeptHead JOIN EmpSalary DH ON E.EmpId = DH.EmpId WHERE ES.IsPermanent = 'Yes';
+ERROR 1054 (42S22): Unknown column 'ES.IsPermanent' in 'where clause'
+mysql> SELECT E.EmpName FROM Employee E JOIN EmpDept ED ON E.EmpId = ED.DeptHead JOIN EmpSalary DH ON E.EmpId = DH.EmpId WHERE IsPermanent = 'Yes';
++----------+
+| EmpName  |
++----------+
+| Abhishek |
+| Isha     |
+| Rahul    |
+| Rahul    |
++----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT E.EmpName, E.EmailId FROM Employee E JOIN EmpSalary ES ON E.EmpId = ES.EmpId JOIN DeptHead ES ON E.Empid = ES.EmpId WHERE E.IsPermanent = 'No';
+ERROR 1066 (42000): Not unique table/alias: 'ES'
+mysql> SELECT E.EmpName, E.EmailId FROM Employee E JOIN EmpSalary ES ON E.EmpId = ES.EmpId JOIN DeptHead ES ON E.Empid = ES.EmpId WHERE ES.IsPermanent = 'No';
+ERROR 1066 (42000): Not unique table/alias: 'ES'
+mysql> SELECT E.EmpName, E.EmailId FROM Employee E JOIN EmpDept ED ON E.Empid = ED.DeptHead JOIN EmpSalary ES on E.EmpId=ES.Emp=Id WHERE ES.IsPermanent = 'No';
+ERROR 1054 (42S22): Unknown column 'ES.Emp' in 'on clause'
+mysql> SELECT E.EmpName, E.EmailId FROM Employee E JOIN EmpDept ED ON E.Empid = ED.DeptHead JOIN EmpSalary ES on E.EmpId=ES.EmpId WHERE ES.IsPermanent = 'No';
++---------+----------------+
+| EmpName | EmailId        |
++---------+----------------+
+| Neha    | neha@gmail.com |
++---------+----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT EmpName FROM Employee E JOIN EmpDept ED ON E.Department = ED.DeptId WHERE ED.Dept_off = 'Monday';
++----------+
+| EmpName  |
++----------+
+| Isha     |
+| Neha     |
+| Abhishek |
++----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ClientTable C JOIN Country CO ON C.cid = CO.cid WHERE CO.cname = 'India';
++----------+------------+------+------+-------+
+| ClientId | ClientName | cid  | cid  | cname |
++----------+------------+------+------+-------+
+| cl-1     | ABC Group  | c-1  | c-1  | India |
+| cl-2     | PQR        | c-1  | c-1  | India |
++----------+------------+------+------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee WHERE Department = 'Development';
+Empty set (0.00 sec)
+
+mysql> CREATE PROCEDURE calculate_average_salary()
+    -> BEGIN
+    ->   DECLARE average_salary DECIMAL(10, 2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql>   SELECT AVG(Salary) INTO average_salary FROM Employee;
+ERROR 1327 (42000): Undeclared variable: average_salary
+mysql>   SELECT 'Average Salary: ' AS message, average_salary;
+ERROR 1054 (42S22): Unknown column 'average_salary' in 'field list'
+mysql> END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE PROCEDURE calculate_average_salary() BEGIN DECLARE average_salary DECIMAL(10, 2); SELECT AVG(Salary) INTO average_salary FROM EmpSalary; SELECT 'Average Salary: ' AS message, average_salary; END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1327 (42000): Undeclared variable: average_salary
+ERROR 1054 (42S22): Unknown column 'average_salary' in 'field list'
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE PROCEDURE calculate_average_salary()
+    -> BEGIN
+    ->   DECLARE average_salary DECIMAL(10, 2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql>   SELECT AVG(Salary) INTO average_salary FROM Employee;
+ERROR 1327 (42000): Undeclared variable: average_salary
+mysql>   SELECT 'Average Salary: ' AS message, average_salary;
+ERROR 1054 (42S22): Unknown column 'average_salary' in 'field list'
+mysql> END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE PROCEDURE calculate_average_salary() BEGIN DECLARE average_salary DECIMAL(10, 2); SELECT AVG(Salary) INTO average_salary FROM EmpSalary; SELECT 'Average Salary: ' AS message, average_salary; END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1327 (42000): Undeclared variable: average_salary
+ERROR 1054 (42S22): Unknown column 'average_salary' in 'field list'
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE PROCEDURE calculate_average_salary() BEGIN DECLARE average_salary DECIMAL(10, 2); SELECT AVG(Salary) INTO average_salary FROM EmpSalary; SELECT 'Average Salary: ' AS message, average_salary; 
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1327 (42000): Undeclared variable: average_salary
+ERROR 1054 (42S22): Unknown column 'average_salary' in 'field list'
+mysql> CREATE PROCEDURE calculate_average_salary()
+    -> AS BEGIN 
+    -> select avg(Salary) as AverageSalary from EmpSalary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS BEGIN 
+select avg(Salary) as AverageSalary from EmpSalary' at line 2
+mysql> CREATE PROCEDURE calculate_average_salary() AS BEGIN  select avg(Salary) as AverageSalary from EmpSalary; END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS BEGIN  select avg(Salary) as AverageSalary from EmpSalary' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE PROCEDURE calculateAverageSalary() AS BEGIN  select Avg(Salary) as AverageSalary from EmpSalary; END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS BEGIN  select Avg(Salary) as AverageSalary from EmpSalary' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE procedure calculate AverageSalary as begin select Avg(salary) as AverageSalary from EmpSalary; END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AverageSalary as begin select Avg(salary) as AverageSalary from EmpSalary' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql>   \C
+ERROR: 
+Usage: \C charset_name | charset charset_name
+mysql>   \C
+ERROR: 
+Usage: \C charset_name | charset charset_name
+mysql> CREATE table Employee_copy like Employee ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into  Employee_copy ( Empid,EmpName,Department,ContactNo,EmailId,EmpHeadId) values ((106, 'rina','E101',96666666666 , rina@gmail.com ,101); )
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gmail.com ,101)' at line 1
+    -> \c
+mysql> insert into  Employee_copy ( Empid,EmpName,Department,ContactNo,EmailId,EmpHeadId) values ((106, 'rina','E101',96666666666 , 'rina@gmail.com' ,101); )
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+    -> (107, 'tina','E102',97777777777,'tina@gmail.com',102);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+(107, 'tina','E102',97777777777,'tina@gmail.com',102)' at line 1
+mysql> insert into  Employee_copy ( Empid int,EmpName varchar(20),Department varchar(20),ContactNo int,EmailId varchar(15),EmpHeadId int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int,EmpName varchar(20),Department varchar(20),ContactNo int,EmailId varchar(15)' at line 1
+mysql> \c
+mysql> create view ClientProjectDetails as select CP.ClientName ,EP.ProjectId,EP.StartYear,EP.EndYear from ClientTable CP JOIN EmpProject EP ON CP.ClientID;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT AVG( Salary) as AverageSalary from EmpSalary where IsPermanent= 'Yes';
++---------------+
+| AverageSalary |
++---------------+
+|     4050.0000 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> create Function GetDepartmentOff(@DepartName varchar(50) returns varchar(255) as begin declare @Deptoff varchar(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@DepartName varchar(50) returns varchar(255) as begin declare @Deptoff varchar(5' at line 1
+mysql> create Function GetDepartmentOff(@DepartName varchar(50) returns varchar(255) as begin declare @Deptoff varchar(50); select Dept_off into @Deptoff from EmpDept where DeptName=@DeptName; return@Deptoff;end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@DepartName varchar(50) returns varchar(255) as begin declare @Deptoff varchar(5' at line 1
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'return@Deptoff' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> create function calculateTDS(@Salary int) returns int as begin declare @TDS INT; 
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@Salary int) returns int as begin declare @TDS INT' at line 1
+mysql> create function calculateTDS(@Salary int) returns int as begin declare @TDS INT; SET @TDS=@Salary*0.1; return @Salary-@TDS;end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@Salary int) returns int as begin declare @TDS INT' at line 1
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'return @Salary-@TDS' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> create function calculateTDS(@Salary int) returns int as begin declare @TDS INT; SET @TDS=@Salary*0.1; return @Salary-@TDS;end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@Salary int) returns int as begin declare @TDS INT' at line 1
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'return @Salary-@TDS' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> create function calculateTDS(@Salary int) returns int as begin declare @TDS INT; SET @TDS=@Salary*0.1; return @Salary-@TDS; end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@Salary int) returns int as begin declare @TDS INT' at line 1
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'return @Salary-@TDS' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> sudo mysql -u root -p
+    -> [sudo] password for dac: 
+    -> Enter password: 
+    -> Welcome to the MySQL monitor.  Commands end with ; or \g.
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sudo mysql -u root -p
+[sudo] password for dac: 
+Enter password: 
+Welcome to the ' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'or' at line 1
+    -> Your MySQL connection id is 8
+    -> Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+    -> 
+    -> Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+    -> 
+    -> Oracle is a registered trademark of Oracle Corporation and/or its
+    -> affiliates. Other names may be trademarks of their respective
+    -> owners.
+    -> 
+    -> Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+    -> 
+    -> mysql> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.
+Your MySQL connection id is 8
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)' at line 1
+mysql> +--------------------+
+    -> | Database           |
+    -> +--------------------+
+    -> | NEWLAB             |
+    -> | assignment7        |
+    -> | b1db               |
+    -> | batch2             |
+    -> | cdacdb             |
+    -> | cdacz              |
+    -> | college            |
+    -> | company            |
+    -> | depart             |
+    -> | information_schema |
+    -> | mysql              |
+    -> | newLab             |
+    -> | performance_schema |
+    -> | pgdac              |
+    -> | sys                |
+    -> +--------------------+
+    -> 15 rows in set (0.01 sec)
+    -> 
+    -> mysql> select database ();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Database           |
++--------------------+
+| NEWLAB   ' at line 1
+mysql> +-------------+
+    -> | database () |
+    -> +-------------+
+    -> | NULL        |
+    -> +-------------+
+    -> 1 row in set (0.00 sec)
+    -> 
+    -> mysql> use EMPLOYEE_COMPANY ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+
+| database () |
++-------------+
+| NULL        |
++-------------+
+' at line 1
+mysql> ERROR 1049 (42000): Unknown database 'EMPLOYEE_COMPANY'
+    -> mysql> create database EMPLOYEE_COMPANY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1049 (42000): Unknown database 'EMPLOYEE_COMPANY'
+mysql> create database E' at line 1
+mysql> Query OK, 1 row affected (0.00 sec)
+    -> 
+    -> mysql> show databases ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases' at line 1
+mysql> +--------------------+
+    -> | Database           |
+    -> +--------------------+
+    -> | EMPLOYEE_COMPANY   |
+    -> | NEWLAB             |
+    -> | assignment7        |
+    -> | b1db               |
+    -> | batch2             |
+    -> | cdacdb             |
+    -> | cdacz              |
+    -> | college            |
+    -> | company            |
+    -> | depart             |
+    -> | information_schema |
+    -> | mysql              |
+    -> | newLab             |
+    -> | performance_schema |
+    -> | pgdac              |
+    -> | sys                |
+    -> +--------------------+
+    -> 16 rows in set (0.00 sec)
+    -> 
+    -> mysql> use EMPLOYEE_COMPANY; 
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Database           |
++--------------------+
+| EMPLOYEE_' at line 1
+mysql> Database changed
+    -> mysql> create table Employee (Empid int , EmpName varchar(50), Department varchar(50) ,ContactNo varchar(15), EmailId varchar(25), EmpHeadId int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> create table Employee (Empid int , EmpName varchar(50), ' at line 1
+mysql> Query OK, 0 rows affected (0.02 sec)
+    -> 
+    -> mysql> insert into Employee values ( '101', 'Isha' ,'E-101' ,'1234567890' ,'isha@gmail.com', '105');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into Employee values ( '101'' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    -> 
+    -> mysql> insert into Employee values ( '102' ,'Priya', 'E-104' ,'1234567890' ,'priya@yahoo.com' ,'103');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values ( '102' ' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    -> 
+    -> mysql> insert into Employee values ( '103', 'Neha', 'E-101' ,'1234567890' ,'neha@gmail.com' ,'101' );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values ( '103',' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    -> 
+    -> mysql> insert into Employee values ('104', 'Rahul', 'E-102' ,'1234567890', 'rahul@yahoo.com' ,'105');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values ('104', ' at line 1
+mysql> Query OK, 1 row affected (0.00 sec)
+    -> 
+    -> mysql> insert into Employee values('105', 'Abhishek', 'E-101', '1234567890', 'abhishek@gmail.com', '102' );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Employee values('105', '' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    -> 
+    -> mysql> show tables ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> show tables' at line 1
+mysql> +----------------------------+
+    -> | Tables_in_EMPLOYEE_COMPANY |
+    -> +----------------------------+
+    -> | Employee                   |
+    -> +----------------------------+
+    -> 1 row in set (0.00 sec)
+    -> 
+    -> mysql> desc Employee ;   
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+----------------------------+
+| Tables_in_EMPLOYEE_COMPANY |
++-----------------' at line 1
+mysql> +------------+-------------+------+-----+---------+-------+
+    -> | Field      | Type        | Null | Key | Default | Extra |
+    -> 
+
+
