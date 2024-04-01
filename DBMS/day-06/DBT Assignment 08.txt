@@ -1,0 +1,249 @@
+dac@dac-Veriton-M200-H310:~/PG-DAC/DBMS/day-06$ sudo mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.36-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| EMPLOYEE_COMPANY   |
+| NEWLAB             |
+| assignment7        |
+| b1db               |
+| batch2             |
+| cdacdb             |
+| cdacz              |
+| college            |
+| company            |
+| depart             |
+| information_schema |
+| mysql              |
+| newLab             |
+| performance_schema |
+| pgdac              |
+| sys                |
++--------------------+
+16 rows in set (0.01 sec)
+
+mysql> use college;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select database();
++------------+
+| database() |
++------------+
+| college    |
++------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE student (
+    ->   roll INT PRIMARY KEY,
+    ->   name VARCHAR(50) NOT NULL,
+    ->   class VARCHAR(10) NOT NULL,
+    ->   marks INT NOT NULL,
+    ->   age INT NOT NULL
+    -> );
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> drop table student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE student (   roll INT PRIMARY KEY,   name VARCHAR(50) NOT NULL,   class VARCHAR(10) NOT NULL,   marks INT NOT NULL,   age INT NOT NULL );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO student (roll, name, class, marks, age) VALUES
+    -> (1, 'John Doe', 'DAC', 85, 26),
+    -> (2, 'Jane Smith', 'DBDA', 78, 25),
+    -> (3, 'Alice Miller', 'DAI', 92, 28),
+    -> (4, 'Bob Johnson', 'DAC', 65, 22),
+    -> (5, 'Mary Williams', 'DAI', 89, 21),
+    -> (6, 'David Brown', 'DAC', 52, 24),
+    -> (7, 'Elizabeth Moore', 'DBDA', 98, 23);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from student;
++------+-----------------+-------+-------+-----+
+| roll | name            | class | marks | age |
++------+-----------------+-------+-------+-----+
+|    1 | John Doe        | DAC   |    85 |  26 |
+|    2 | Jane Smith      | DBDA  |    78 |  25 |
+|    3 | Alice Miller    | DAI   |    92 |  28 |
+|    4 | Bob Johnson     | DAC   |    65 |  22 |
+|    5 | Mary Williams   | DAI   |    89 |  21 |
+|    6 | David Brown     | DAC   |    52 |  24 |
+|    7 | Elizabeth Moore | DBDA  |    98 |  23 |
++------+-----------------+-------+-------+-----+
+7 rows in set (0.00 sec)
+
+
+***********************************************************************************************************
+
+
+mysql> delimiter &&
+mysql> CREATE PROCEDURE GetStudentsByMarkRange(
+    ->   IN min_marks INT,
+    ->   IN max_marks INT
+    -> )
+    -> BEGIN
+    ->   SELECT name
+    ->   FROM student
+    ->   WHERE marks >= min_marks AND marks <= max_marks;
+    -> END;
+    -> &&
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+mysql> call  GetStudentsByMarkRange(50 ,85 );
++-------------+
+| name        |
++-------------+
+| John Doe    |
+| Jane Smith  |
+| Bob Johnson |
+| David Brown |
++-------------+
+4 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+*******************************************************************************
+
+
+
+
+mysql> delimiter &&
+mysql> CREATE PROCEDURE GetStudentSummary()
+    -> BEGIN
+    ->   SELECT
+    ->     SUM(marks) AS TotalMarks,
+    ->     AVG(marks) AS AverageMarks,
+    ->     MIN(marks) AS MinimumMarks,
+    ->     MAX(marks) AS MaximumMarks
+    ->   FROM student;
+    -> END;
+    -> &&
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call GetStudentSummary();
++------------+--------------+--------------+--------------+
+| TotalMarks | AverageMarks | MinimumMarks | MaximumMarks |
++------------+--------------+--------------+--------------+
+|        559 |      79.8571 |           52 |           98 |
++------------+--------------+--------------+--------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+******************************************************************************************************
+
+
+mysql> delimiter &&
+mysql> CREATE PROCEDURE GetStudentMarks(
+    ->   IN student_roll INT
+    -> )
+    -> BEGIN
+    ->   DECLARE student_marks INT;
+    ->   
+    ->   SELECT marks INTO student_marks
+    ->   FROM student
+    ->   WHERE roll = student_roll;
+    ->   
+    ->   IF student_marks IS NULL THEN
+    ->     SELECT 'Student with roll number ' || student_roll || ' not found.';
+    ->   ELSE
+    ->     SELECT student_marks AS Marks;
+    ->   END IF;
+    -> END;
+    -> 
+    -> &&
+Query OK, 0 rows affected, 2 warnings (0.00 sec)
+
+
+mysql> call GetStudentMarks(5 );
++-------+
+| Marks |
++-------+
+|    89 |
++-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+********************************************************************************************************
+
+mysql> delimiter &&
+mysql> 
+mysql> CREATE PROCEDURE GetAverageMarksByRollRange(IN min_roll INT, IN max_roll INT)
+    -> BEGIN
+    ->   SELECT AVG(marks) AS AverageMarks
+    ->   FROM student
+    ->   WHERE roll >= min_roll AND roll <= max_roll;
+    -> END;
+    -> &&
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> delimiter ;
+mysql> call GetAverageMarksByRollRange(2,6);
++--------------+
+| AverageMarks |
++--------------+
+|      75.2000 |
++--------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+************************************************************************************************************
+
+
+mysql> delimiter &&
+mysql> CREATE PROCEDURE NumStudentsBelow70()
+    -> BEGIN
+    ->   SELECT COUNT(*) AS StudentsBelow70
+    ->   FROM student
+    ->   WHERE marks < 70;
+    -> END;
+    -> &&
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> call NumStudentsBelow70 ;
++-----------------+
+| StudentsBelow70 |
++-----------------+
+|               2 |
++-----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call NumStudentsBelow70() ;
++-----------------+
+| StudentsBelow70 |
++-----------------+
+|               2 |
++-----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
